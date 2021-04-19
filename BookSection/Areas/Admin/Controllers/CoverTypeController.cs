@@ -1,18 +1,19 @@
 ﻿using Book.DataAccess.Repository.IRepository;
 using Book.Models;
+using Book.Utility;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSection.Areas.Admin.Controllers
 {
-    [Area("Admin")] 
-
+    [Area("Admin")]
     public class CoverTypeController : Controller
     {
-        private readonly IUnitOfWork _UnitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CoverTypeController(IUnitOfWork unitOfWork)
         {
-            _UnitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
@@ -29,7 +30,10 @@ namespace BookSection.Areas.Admin.Controllers
                 return View(coverType);
             
             //this is for edit
-            coverType = _UnitOfWork.CoverType.Get(id.GetValueOrDefault());
+            var parameter = new DynamicParameters();
+            parameter.Add("@Id", id);
+            coverType = _unitOfWork.SpCall.OneRecord<CoverType>(Sd.ProcCoverTypeGet, parameter);
+
             if (coverType == null)
                 return NotFound();
             
@@ -42,33 +46,45 @@ namespace BookSection.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(coverType);
 
+            var parameter = new DynamicParameters();
+            parameter.Add("@Name", coverType.Name);
+
             if (coverType.Id == 0)
-                _UnitOfWork.CoverType.Add(coverType);
+            {
+                _unitOfWork.SpCall.Execute(Sd.ProcCoverTypeCreate, parameter);
+            }
             else
-                _UnitOfWork.CoverType.Update(coverType);
-            _UnitOfWork.Save();
+            {
+                parameter.Add("@Id", coverType.Id);
+                _unitOfWork.SpCall.Execute(Sd.ProcCoverTypeUpdate, parameter);
+            }
+
+            _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }
 
         #region API Calls
 
+        [HttpGet]
         public IActionResult GetAll()
         {
-            var allObj = _UnitOfWork.CoverType.GetAll();
+            var allObj = _unitOfWork.SpCall.List<CoverType>(Sd.ProcCoverTypeGetAll, null);
             return Json(new {data = allObj});
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var objFromDb = _UnitOfWork.CoverType.Get(id);
+            var parameter = new DynamicParameters();
+            parameter.Add("@Id", id);
+            var objFromDb = _unitOfWork.SpCall.OneRecord<CoverType>(Sd.ProcCoverTypeGet, parameter);
             
             if (objFromDb == null)
                 return Json(new {success = false, message = "Error while deleting"});
 
-            _UnitOfWork.CoverType.Remove(objFromDb);
-            _UnitOfWork.Save();
+            _unitOfWork.SpCall.Execute(Sd.ProcCoverTypeDelete, parameter);
+            _unitOfWork.Save();
             return Json(new {success = true, message = "Deleted successfully"});
         }
 

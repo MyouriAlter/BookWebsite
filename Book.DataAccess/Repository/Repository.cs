@@ -11,13 +11,11 @@ namespace Book.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _dbContext;
         internal DbSet<T> DbSet;
 
         public Repository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbContext;
-            this.DbSet = _dbContext.Set<T>();
+            this.DbSet = dbContext.Set<T>();
         }
 
         public T Get(int id)
