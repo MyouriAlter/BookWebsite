@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Dapper;
 
-
 namespace Book.DataAccess.Repository.IRepository
 {
     public interface ISpCall : IDisposable

@@ -13,18 +13,17 @@ a {
 }
 
 /* remove bhrugen*/
-    .btn-primary {
-  color: #fff;
-  background-color: #2c3e50;
-  border-color: #1861ac;
+.btn-primary {
+    color: #fff;
+    background-color: #2c3e50;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  
-  /*background-color: #1b6ec2;*/
-background-color: #2c3e50;
-border-color: #1861ac;
+    color: #fff;
+    /*background-color: #1b6ec2;*/
+    background-color: #2c3e50;
+    border-color: #1861ac;
 }
 
 */
@@ -77,7 +76,6 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-
 .boxContainer {
     display: table;
 }
@@ -103,8 +101,6 @@ body {
     left: 0;
     width: 100%;
 }
-
-
 
 #logreg-forms {
     width: 412px;
@@ -167,7 +163,6 @@ body {
     width: 200px;
     border: 1px solid red;
 }
-
 
 #logreg-forms button[type="submit"] {
     margin-top: 10px;

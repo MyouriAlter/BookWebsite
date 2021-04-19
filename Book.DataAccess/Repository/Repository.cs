@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Book.DataAccess.Data;
 using Book.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -11,72 +10,69 @@ namespace Book.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        internal DbSet<T> DbSet;
+        private readonly DbSet<T> _dbSet;
 
-        public Repository(ApplicationDbContext dbContext)
+        protected Repository(ApplicationDbContext dbContext)
         {
-            this.DbSet = dbContext.Set<T>();
+            _dbSet = dbContext.Set<T>();
         }
 
         public T Get(int id)
         {
-            return DbSet.Find(id);
+            return _dbSet.Find(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
-            IQueryable<T> queryable = DbSet;
+            IQueryable<T> queryable = _dbSet;
 
             if (filter != null)
                 queryable = queryable.Where(filter);
 
             if (includeProperties != null)
-            {
                 queryable = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
-                    .Aggregate(queryable, (current, includeProperty) 
+                    .Aggregate(queryable, (current, includeProperty)
                         => current.Include(includeProperty));
-            }
 
             return orderBy != null ? orderBy(queryable).ToList() : queryable.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
-            IQueryable<T> queryable = DbSet;
+            IQueryable<T> queryable = _dbSet;
 
             if (filter != null)
                 queryable = queryable.Where(filter);
 
             if (includeProperties != null)
-            {
-                queryable = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                queryable = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
                     .Aggregate(queryable, (current, includeProperty)
                         => current.Include(includeProperty));
-            }
 
             return queryable.FirstOrDefault();
-
         }
 
         public void Add(T entity)
         {
-            DbSet.Add(entity);
+            _dbSet.Add(entity);
         }
 
         public void Remove(T entity)
         {
-            DbSet.Remove(entity);
+            _dbSet.Remove(entity);
         }
 
         public void Remove(int id)
         {
-            T entity = DbSet.Find(id);
+            var entity = _dbSet.Find(id);
             Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entity)
         {
-            DbSet.RemoveRange(entity);
+            _dbSet.RemoveRange(entity);
         }
     }
 }

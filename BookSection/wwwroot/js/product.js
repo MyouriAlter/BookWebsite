@@ -1,26 +1,30 @@
-﻿let dataCoverTable;
+﻿let dataProductTable;
 
 $(document).ready(function (){
-    loadCoverDataTable();
+    loadProductDataTable();
 });
 
-function loadCoverDataTable() {
-    dataCoverTable = $('#tblCoverData').DataTable({
+function loadProductDataTable() {
+    dataProductTable = $('#tblProductData').DataTable({
         "ajax": {
-            "url": "/Admin/CoverType/GetAll"
+            "url": "/Admin/Product/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "60%"},
+            { "data": "title", "width": "15%"},
+            { "data": "isbn", "width": "15%"},
+            { "data": "price", "width": "15%%"},
+            { "data": "author", "width": "15%%"},
+            { "data": "category.Name", "width": "15%%"},
             {
                 "data": "id",
                 "render": function (data){
                     return `
                         <div class="text-center">
-                            <a href="/Admin/CoverType/Upsert/${data}" 
+                            <a href="/Admin/Product/Upsert/${data}" 
                             class="btn btn-success text-white" style="cursor: pointer">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas f a-edit"></i>
                             </a>
-                            <a onclick=DeleteCover("/Admin/CoverType/Delete/${data}") 
+                            <a onclick=DeleteProduct("/Admin/Product/Delete/${data}") 
                             class="btn btn-danger text-white" style="cursor: pointer">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
@@ -32,7 +36,7 @@ function loadCoverDataTable() {
     });
 }
 
-function DeleteCover(url){
+function DeleteProduct(url){
     swal({
         title: "Are you sure you want to delete this entry?",
         text: "You will not be able to revert this change",

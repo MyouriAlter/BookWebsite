@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Book.DataAccess.Data;
 using Book.DataAccess.Repository.IRepository;
 using Book.Models;
@@ -25,7 +22,7 @@ namespace Book.DataAccess.Repository
 
             if (product.ImageUrl != null)
                 objFromDb.ImageUrl = product.ImageUrl;
-            
+
             objFromDb.Isbn = product.Isbn;
             objFromDb.Price = product.Price;
             objFromDb.Price50 = product.Price50;
@@ -36,7 +33,6 @@ namespace Book.DataAccess.Repository
             objFromDb.CategoryId = product.CategoryId;
             objFromDb.Author = product.Author;
             objFromDb.CoverTypeId = product.CoverTypeId;
-
         }
     }
 }

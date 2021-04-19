@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Book.DataAccess.Repository.IRepository
 {
@@ -10,6 +8,7 @@ namespace Book.DataAccess.Repository.IRepository
         ICoverTypeRepository CoverType { get; }
         IProductRepository Product { get; }
         ISpCall SpCall { get; }
+
         void Save();
     }
 }

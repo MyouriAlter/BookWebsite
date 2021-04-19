@@ -6,7 +6,6 @@ namespace Book.DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.Sql(@"CREATE PROC usp_GetCoverTypes
                                 AS
                                 BEGIN
@@ -14,7 +13,7 @@ namespace Book.DataAccess.Migrations
                                 END");
 
             migrationBuilder.Sql(@"CREATE PROC usp_GetCoverType
-                                @Id int 
+                                @Id int
                                 AS
                                 BEGIN
                                  SELECT * FROM dbo.CoverTypes WHERE (Id = @Id)
@@ -45,7 +44,6 @@ namespace Book.DataAccess.Migrations
                                  INSERT INTO dbo.CoverTypes(Name)
                                  VALUES (@Name)
                                 END");
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

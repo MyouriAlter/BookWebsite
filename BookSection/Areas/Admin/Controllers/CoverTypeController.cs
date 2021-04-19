@@ -23,12 +23,12 @@ namespace BookSection.Areas.Admin.Controllers
 
         public IActionResult Upsert(int? id)
         {
-            CoverType coverType = new CoverType();
-            
+            var coverType = new CoverType();
+
             //this is for create
             if (id == null)
                 return View(coverType);
-            
+
             //this is for edit
             var parameter = new DynamicParameters();
             parameter.Add("@Id", id);
@@ -36,7 +36,7 @@ namespace BookSection.Areas.Admin.Controllers
 
             if (coverType == null)
                 return NotFound();
-            
+
             return View(coverType);
         }
 
@@ -69,7 +69,7 @@ namespace BookSection.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var allObj = _unitOfWork.SpCall.List<CoverType>(Sd.ProcCoverTypeGetAll, null);
+            var allObj = _unitOfWork.SpCall.List<CoverType>(Sd.ProcCoverTypeGetAll);
             return Json(new {data = allObj});
         }
 
@@ -79,7 +79,7 @@ namespace BookSection.Areas.Admin.Controllers
             var parameter = new DynamicParameters();
             parameter.Add("@Id", id);
             var objFromDb = _unitOfWork.SpCall.OneRecord<CoverType>(Sd.ProcCoverTypeGet, parameter);
-            
+
             if (objFromDb == null)
                 return Json(new {success = false, message = "Error while deleting"});
 
@@ -88,8 +88,6 @@ namespace BookSection.Areas.Admin.Controllers
             return Json(new {success = true, message = "Deleted successfully"});
         }
 
-        #endregion
-        
-
+        #endregion API Calls
     }
 }

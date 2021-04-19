@@ -1,6 +1,6 @@
 ﻿let dataCoverTable;
 
-$(document).ready(function (){
+$(document).ready(function () {
     loadCoverDataTable();
 });
 
@@ -10,29 +10,29 @@ function loadCoverDataTable() {
             "url": "/Admin/CoverType/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "60%"},
+            { "data": "name", "width": "60%" },
             {
                 "data": "id",
-                "render": function (data){
+                "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a href="/Admin/CoverType/Upsert/${data}" 
+                            <a href="/Admin/CoverType/Upsert/${data}"
                             class="btn btn-success text-white" style="cursor: pointer">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a onclick=DeleteCover("/Admin/CoverType/Delete/${data}") 
+                            <a onclick=DeleteCover("/Admin/CoverType/Delete/${data}")
                             class="btn btn-danger text-white" style="cursor: pointer">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
                     `;
-                } , "width": "40%"
+                }, "width": "40%"
             }
         ]
     });
 }
 
-function DeleteCover(url){
+function DeleteCover(url) {
     swal({
         title: "Are you sure you want to delete this entry?",
         text: "You will not be able to revert this change",

@@ -4,7 +4,6 @@ $(document).ready(function () {
     loadCategoryDataTable();
 });
 
-
 function loadCategoryDataTable() {
     dataCategoryTable = $('#tblCategoryData').DataTable({
         "ajax": {
@@ -17,13 +16,13 @@ function loadCategoryDataTable() {
                 "render": function (data) {
                     return `
                         <div class="text-center">
-                            <a href="/Admin/Category/Upsert/${data}" 
+                            <a href="/Admin/Category/Upsert/${data}"
                             class="btn btn-success text-white" style="cursor:pointer">
-                                <i class="fas fa-edit"></i> 
+                                <i class="fas fa-edit"></i>
                             </a>
-                             <a onclick=DeleteCategory("/Admin/Category/Delete/${data}") 
+                             <a onclick=DeleteCategory("/Admin/Category/Delete/${data}")
                                 class="btn btn-danger text-white" style="cursor:pointer">
-                                <i class="fas fa-trash-alt"></i> 
+                                <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
                     `;
@@ -33,7 +32,7 @@ function loadCategoryDataTable() {
     });
 }
 
-function DeleteCategory(url){
+function DeleteCategory(url) {
     swal({
         title: "Are you sure you want to delete this?",
         text: "You will not be able to reverse this change",
@@ -46,7 +45,7 @@ function DeleteCategory(url){
                 type: "DELETE",
                 url: url,
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         toastr.success(data.message);
                         dataCategoryTable.ajax.reload();
                     } else {

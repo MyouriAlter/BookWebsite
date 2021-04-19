@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Book.DataAccess.Data;
 using Book.DataAccess.Repository.IRepository;
 using Book.Models;

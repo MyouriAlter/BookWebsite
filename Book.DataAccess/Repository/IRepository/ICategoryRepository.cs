@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Book.Models;
+﻿using Book.Models;
 
 namespace Book.DataAccess.Repository.IRepository
 {
